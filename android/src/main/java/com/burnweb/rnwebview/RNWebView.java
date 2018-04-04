@@ -13,6 +13,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.PermissionRequest;
+
 
 import com.facebook.react.common.SystemClock;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -74,6 +76,11 @@ class RNWebView extends WebView implements LifecycleEventListener {
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
             return getModule().startFileChooserIntent(filePathCallback, fileChooserParams.createIntent());
         }
+
+        @Override
+		public void onPermissionRequest(final PermissionRequest request) {
+			request.grant(request.getResources());
+		}
     }
 
     protected class GeoWebChromeClient extends CustomWebChromeClient {
